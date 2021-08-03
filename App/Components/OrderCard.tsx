@@ -3,12 +3,15 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {CustomTheme} from '../Config/Colors';
 import useGlobalStyle from '../Config/useGlobalStyle';
+import {MyOrdersoutScreenNavigationProp} from '../Screens/MyOrders';
 import AppButton from './AppButton';
 import AppText from './AppText';
 
-interface Props {}
+interface Props {
+  navigation: MyOrdersoutScreenNavigationProp;
+}
 
-const OrderCard: React.FC<Props> = ({}) => {
+const OrderCard: React.FC<Props> = ({navigation}) => {
   const {greyText} = useGlobalStyle();
   const {colors} = useTheme() as CustomTheme;
 
@@ -39,7 +42,10 @@ const OrderCard: React.FC<Props> = ({}) => {
               title="Details"
               textStyle={[styles.buttonText, {color: colors.text}]}
               style={[styles.button, {borderColor: colors.text}]}
-              onPress={() => {}}
+              onPress={() => {
+                navigation.navigate('OrderDetails');
+              }}
+              innerStyle={{paddingHorizontal: 30, paddingVertical: 10}}
             />
           </View>
         </View>
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    paddingHorizontal: 30,
+
     marginVertical: 0,
     elevation: 0,
   },

@@ -30,7 +30,7 @@ const ShopStackNavigator: React.FC = () => {
         options={{
           header: () => (
             <SafeAreaView>
-              <Header title="Categories" />
+              <Header title="Categories" transparent />
             </SafeAreaView>
           ),
         }}

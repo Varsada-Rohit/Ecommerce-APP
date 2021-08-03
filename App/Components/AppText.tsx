@@ -1,10 +1,11 @@
 import {useTheme} from '@react-navigation/native';
 import React from 'react';
+import {TextStyle} from 'react-native';
 import {View, StyleSheet, Text} from 'react-native';
 import Colors from '../Config/Colors';
 
 interface Props {
-  style?: object;
+  style?: TextStyle[] | TextStyle;
 }
 
 const AppText: React.FC<Props> = ({style, children}) => {

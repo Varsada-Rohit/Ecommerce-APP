@@ -16,6 +16,7 @@ import Header from './Header';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import AccountDetailList from './AccountDetailList';
 import AppButton from './AppButton';
+import BrandFilterModal from './BrandFilterModal';
 
 interface Props {
   visible?: boolean;
@@ -40,6 +41,8 @@ const FilterModal: React.FC<Props> = ({visible, closeFilterModal}) => {
   const [selectedColor, setSelectedColor] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>(['S']);
   const [selectedCategory, setSelectedCategory] = useState('All');
+  const [brandModal, setBrandModal] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState<string[]>([]);
   const {colors, dark} = useTheme() as CustomTheme;
 
   const onColorPress = (color: string) => {
@@ -202,11 +205,20 @@ const FilterModal: React.FC<Props> = ({visible, closeFilterModal}) => {
         </View>
         <AccountDetailList
           title="Brand"
-          subTitle="adidas Originals, Jack &amp; Jones, s.Oliver"
-          onPress={() => {}}
+          subTitle={selectedBrand.join(', ').toString()}
+          onPress={() => setBrandModal(true)}
         />
       </ScrollView>
-      <View style={styles.buttonContainer}>
+      <BrandFilterModal
+        visible={brandModal}
+        selectedBrand={selectedBrand}
+        setSelectedBrand={setSelectedBrand}
+        closeBrandFilterModal={() => {
+          setBrandModal(false);
+        }}
+      />
+      <View
+        style={[styles.buttonContainer, {backgroundColor: colors.secondary}]}>
         <AppButton
           title="Discard"
           style={[
@@ -237,7 +249,7 @@ const styles = StyleSheet.create({
   title: {
     padding: 10,
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'Metropolis-Medium',
   },
   filterContainer: {
     paddingVertical: 20,
@@ -280,10 +292,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     elevation: 26,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   button: {
     width: '45%',
-    paddingVertical: 8,
   },
   buttonText: {
     textTransform: 'capitalize',

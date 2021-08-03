@@ -39,7 +39,7 @@ const SubSubCategories: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={[container, styles.container]}>
-      <Header title="Categories" />
+      <Header title="Categories" transparent />
       <View style={styles.header}>
         <AppButton
           title="view all items"

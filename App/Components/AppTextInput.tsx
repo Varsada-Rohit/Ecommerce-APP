@@ -2,7 +2,7 @@ import {useTheme} from '@react-navigation/native';
 import {FormikErrors} from 'formik';
 import {Form, Icon, Input, Item, Label} from 'native-base';
 import React from 'react';
-import {View, StyleSheet, TextInput} from 'react-native';
+import {View, StyleSheet, TextInput, ViewStyle} from 'react-native';
 import {CustomTheme} from '../Config/Colors';
 import ErrorText from './ErrorText';
 
@@ -10,9 +10,15 @@ interface Props {
   error?: string | string[] | FormikErrors<any> | FormikErrors<any>[];
   label?: string;
   [x: string]: any;
+  style?: ViewStyle;
 }
 
-const AppTextInput: React.FC<Props> = ({error, label, ...otherPeramerters}) => {
+const AppTextInput: React.FC<Props> = ({
+  error,
+  label,
+  style,
+  ...otherPeramerters
+}) => {
   const {colors} = useTheme() as CustomTheme;
 
   return (
@@ -25,6 +31,7 @@ const AppTextInput: React.FC<Props> = ({error, label, ...otherPeramerters}) => {
             borderColor: error ? colors.error : 'transparent',
             borderWidth: 1,
           },
+          style,
         ]}>
         <Item error={true} floatingLabel style={styles.item}>
           <Label
@@ -42,6 +49,7 @@ const AppTextInput: React.FC<Props> = ({error, label, ...otherPeramerters}) => {
             <Icon
               style={{
                 height: '100%',
+                color: colors.error,
               }}
               name="ios-close"
             />

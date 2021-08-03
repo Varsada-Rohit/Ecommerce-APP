@@ -1,16 +1,10 @@
 import {useTheme} from '@react-navigation/native';
-import React, {createRef, LegacyRef, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  TouchableNativeFeedback,
-  TouchableHighlight,
-} from 'react-native';
+import React, {LegacyRef} from 'react';
+import {View, StyleSheet, TouchableHighlight} from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {CustomTheme} from '../Config/Colors';
 import useGlobalStyle from '../Config/useGlobalStyle';
+import ActionsheetHeader from './ActionsheetHeader';
 import AppText from './AppText';
 
 interface Props {
@@ -40,8 +34,7 @@ const SortByActionSheet = React.forwardRef(
           ...styles.container,
           backgroundColor: colors.background,
         }}>
-        <View style={[styles.line, {backgroundColor: colors.grey}]}></View>
-        <AppText style={[headline3, styles.heading]}>Sort by</AppText>
+        <ActionsheetHeader title={'Sort by'} />
         <View style={styles.body}>
           {shortMethods.map(name => {
             return (
@@ -54,7 +47,7 @@ const SortByActionSheet = React.forwardRef(
                     styles.name,
                     sortBy == name
                       ? {backgroundColor: colors.primary, color: colors.white}
-                      : null,
+                      : {},
                   ]}>
                   {name}
                 </AppText>
@@ -70,17 +63,6 @@ const SortByActionSheet = React.forwardRef(
 const styles = StyleSheet.create({
   container: {
     borderRadius: 30,
-  },
-  line: {
-    height: 6,
-    width: 60,
-    borderRadius: 3,
-    alignSelf: 'center',
-    marginVertical: 10,
-  },
-  heading: {
-    textAlign: 'center',
-    marginVertical: 2,
   },
   body: {
     marginVertical: 20,

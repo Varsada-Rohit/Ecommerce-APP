@@ -1,3 +1,4 @@
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -6,16 +7,24 @@ import Header from '../Components/Header';
 import Heading from '../Components/Heading';
 import OrderCard from '../Components/OrderCard';
 import useGlobalStyle from '../Config/useGlobalStyle';
+import {ProfileStackParamsList} from '../Navigators/ProfileStack';
 
-interface Props {}
+export type MyOrdersoutScreenNavigationProp = StackNavigationProp<
+  ProfileStackParamsList,
+  'MyOrders'
+>;
 
-const MyOrders: React.FC<Props> = ({}) => {
+interface Props {
+  navigation: MyOrdersoutScreenNavigationProp;
+}
+
+const MyOrders: React.FC<Props> = ({navigation}) => {
   const [orderStatus, setOrderStatus] = useState('Delivered');
   const {container} = useGlobalStyle();
 
   return (
     <SafeAreaView style={[container, styles.container]}>
-      <Header />
+      <Header transparent />
       <View style={{paddingHorizontal: 10}}>
         <View>
           <Heading>My orders</Heading>
@@ -33,7 +42,7 @@ const MyOrders: React.FC<Props> = ({}) => {
           </View>
         </View>
         <View style={styles.orderList}>
-          <OrderCard />
+          <OrderCard navigation={navigation} />
         </View>
       </View>
     </SafeAreaView>

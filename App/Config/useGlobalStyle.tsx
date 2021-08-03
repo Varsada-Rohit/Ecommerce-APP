@@ -9,15 +9,15 @@ const useGlobalStyle = () => {
     container: {
       flex: 1,
       backgroundColor: colors.background,
-      paddingHorizontal: 10,
+      paddingHorizontal: 15,
     },
     headline3: {
       fontSize: 18,
-      fontWeight: '700',
+      fontFamily: 'Metropolis-Medium',
     },
     headline4: {
       fontSize: 16,
-      fontWeight: '700',
+      fontFamily: 'Metropolis-Medium',
     },
     greyText: {
       color: colors.grey,

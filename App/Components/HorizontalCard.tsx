@@ -1,18 +1,22 @@
 import {useTheme} from '@react-navigation/native';
-import React from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, StyleSheet, Image, TouchableWithoutFeedback} from 'react-native';
 import {Rating} from 'react-native-ratings';
 import {CustomTheme} from '../Config/Colors';
 import useGlobalStyle from '../Config/useGlobalStyle';
 import HeartIcon from '../Assets/HeartIcon';
 
 import AppText from './AppText';
+import IconBounce, {animationHandler} from '../Animations/IconBounce';
 
 interface Props {}
 
 const HorizontalCard: React.FC<Props> = ({}) => {
   const {greyText} = useGlobalStyle();
   const {colors} = useTheme() as CustomTheme;
+
+  const [inFavorite, setInFavorite] = useState(false);
+  const heartIcon = useRef<animationHandler>(null);
 
   return (
     <View style={[styles.container, {backgroundColor: colors.secondary}]}>
@@ -49,10 +53,27 @@ const HorizontalCard: React.FC<Props> = ({}) => {
           <AppText style={{color: colors.primary, marginLeft: 5}}>12$</AppText>
         </View>
       </View>
-      <View
-        style={[styles.addToFavorite, {backgroundColor: colors.background}]}>
-        <HeartIcon width={13} height={12} fill="none" stroke={colors.grey} />
-      </View>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (inFavorite) {
+            heartIcon.current?.danimateHeart();
+          } else {
+            heartIcon.current?.animateHeart();
+          }
+          setInFavorite(!inFavorite);
+        }}>
+        <View
+          style={[styles.addToFavorite, {backgroundColor: colors.background}]}>
+          <IconBounce ref={heartIcon}>
+            <HeartIcon
+              width={13}
+              height={12}
+              fill={inFavorite ? colors.primary : 'none'}
+              stroke={inFavorite ? colors.primary : colors.grey}
+            />
+          </IconBounce>
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 };

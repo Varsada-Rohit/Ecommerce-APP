@@ -1,14 +1,15 @@
 import {useFormikContext} from 'formik';
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ViewStyle} from 'react-native';
 import AppTextInput from './AppTextInput';
 
 interface Props {
   feildName: string;
+  style?: ViewStyle;
   [x: string]: any;
 }
 
-const FormInput: React.FC<Props> = ({feildName, ...otherPerameters}) => {
+const FormInput: React.FC<Props> = ({feildName, style, ...otherPerameters}) => {
   const {setFieldTouched, setFieldValue, touched, values, errors} =
     useFormikContext<FormValues>();
 
@@ -26,6 +27,7 @@ const FormInput: React.FC<Props> = ({feildName, ...otherPerameters}) => {
             ? errors[feildName]
             : undefined
         }
+        style={style}
       />
     </>
   );

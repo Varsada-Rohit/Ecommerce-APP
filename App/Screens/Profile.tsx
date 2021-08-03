@@ -12,9 +12,13 @@ import {CustomTheme} from '../Config/Colors';
 import useGlobalStyle from '../Config/useGlobalStyle';
 import {ProfileStackParamsList} from '../Navigators/ProfileStack';
 
-interface Props {}
+type data = {
+  title: string;
+  subTitle: string;
+  screen: keyof ProfileStackParamsList;
+};
 
-let data = [
+let data: Array<data> = [
   {
     title: 'My orders',
     subTitle: 'Already have 12 orders',
@@ -43,7 +47,7 @@ let data = [
   {
     title: 'Settings',
     subTitle: 'Notifications, password',
-    screen: 'MyOrders',
+    screen: 'Settings',
   },
 ];
 
@@ -62,7 +66,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
 
   return (
     <SafeAreaView style={[container, styles.container]}>
-      <Header hideBack />
+      <Header hideBack transparent />
       <ScrollView>
         <View style={styles.header}>
           <Heading>My profile</Heading>
@@ -83,7 +87,7 @@ const Profile: React.FC<Props> = ({navigation}) => {
                 <AccountDetailList
                   title={item.title}
                   subTitle={item.subTitle}
-                  onPress={() => navigation.navigate('MyOrders')}
+                  onPress={() => navigation.navigate(item.screen)}
                 />
                 {index < data.length - 1 && (
                   <View
@@ -116,7 +120,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   header: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
   },
   nameContainer: {
     marginLeft: 20,

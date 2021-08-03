@@ -26,7 +26,9 @@ const AccountDetailList: React.FC<Props> = ({title, subTitle, onPress}) => {
       <View style={styles.container}>
         <View style={{flex: 1}}>
           <AppText style={[headline4, styles.heading]}>{title}</AppText>
-          <AppText style={greyText}>{subTitle}</AppText>
+          {subTitle.length > 0 && (
+            <AppText style={greyText}>{subTitle}</AppText>
+          )}
         </View>
         <Icon
           name="ios-chevron-forward-outline"
@@ -39,7 +41,7 @@ const AccountDetailList: React.FC<Props> = ({title, subTitle, onPress}) => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 15,
     backgroundColor: 'transparent',
     flexDirection: 'row',
     alignItems: 'center',

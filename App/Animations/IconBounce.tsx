@@ -5,33 +5,35 @@ interface Props {
   children: HTMLElement;
 }
 
+export type animationHandler = {
+  animateHeart: () => void;
+  danimateHeart: () => void;
+};
+
 const IconBounce = React.forwardRef(
-  ({children}: Props, ref: Ref<{animateHeart: any}>) => {
+  ({children}: Props, ref: Ref<animationHandler>) => {
     const [heartAnimateValue, setHeartAnimateValue] = useState(
       new Animated.Value(0),
     );
 
     useImperativeHandle(ref, () => ({
-      animateHeart,
-      danimateHeart,
+      animateHeart() {
+        Animated.timing(heartAnimateValue, {
+          toValue: 1,
+          duration: 500,
+          useNativeDriver: false,
+          easing: Easing.ease,
+        }).start();
+      },
+      danimateHeart() {
+        Animated.timing(heartAnimateValue, {
+          toValue: 0,
+          duration: 500,
+          useNativeDriver: false,
+          easing: Easing.linear,
+        }).start();
+      },
     }));
-
-    const animateHeart = () => {
-      Animated.timing(heartAnimateValue, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: false,
-        easing: Easing.ease,
-      }).start();
-    };
-    const danimateHeart = () => {
-      Animated.timing(heartAnimateValue, {
-        toValue: 0,
-        duration: 500,
-        useNativeDriver: false,
-        easing: Easing.linear,
-      }).start();
-    };
 
     let finalValue = heartAnimateValue.interpolate({
       inputRange: [0, 0.1, 0.55, 1],

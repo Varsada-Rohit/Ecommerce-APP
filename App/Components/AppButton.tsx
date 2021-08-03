@@ -13,6 +13,7 @@ interface Props {
   onPress: (event: GestureResponderEvent) => void;
   title: string;
   style?: object;
+  innerStyle?: object;
   textStyle?: object;
 }
 
@@ -20,24 +21,26 @@ const AppButton: React.FC<Props> = ({
   onPress,
   title,
   style,
-
+  innerStyle,
   textStyle,
 }) => {
   const {colors} = useTheme() as CustomTheme;
 
   return (
-    <TouchableNativeFeedback onPress={onPress}>
-      <View
-        style={[
-          styles.container,
-          {backgroundColor: colors.primary, shadowColor: colors.primary},
-          style,
-        ]}>
-        <AppText style={[styles.title, {color: colors.white}, textStyle]}>
-          {title}
-        </AppText>
-      </View>
-    </TouchableNativeFeedback>
+    <View
+      style={[
+        styles.container,
+        {backgroundColor: colors.primary, shadowColor: colors.primary},
+        style,
+      ]}>
+      <TouchableNativeFeedback onPress={onPress}>
+        <View style={[styles.inner, innerStyle]}>
+          <AppText style={[styles.title, {color: colors.white}, textStyle]}>
+            {title}
+          </AppText>
+        </View>
+      </TouchableNativeFeedback>
+    </View>
   );
 };
 
@@ -49,13 +52,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     borderRadius: 100,
     elevation: 6,
-
     marginVertical: 10,
-    paddingVertical: 12,
+    overflow: 'hidden',
   },
   title: {
     fontSize: 18,
     textTransform: 'uppercase',
+  },
+  inner: {
+    // flexDirection: 'row',
+    flexGrow: 1,
+    height: '100%',
+    alignItems: 'center',
+    paddingVertical: 12,
   },
 });
 

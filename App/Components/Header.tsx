@@ -1,7 +1,7 @@
 import {useNavigation, useTheme} from '@react-navigation/native';
 import {Icon} from 'native-base';
 import React from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
+import {SafeAreaView, View, StyleSheet, StatusBar} from 'react-native';
 import {CustomTheme} from '../Config/Colors';
 import useGlobalStyle from '../Config/useGlobalStyle';
 import AppText from './AppText';
@@ -11,6 +11,8 @@ interface Props {
   hideSearch?: Boolean;
   title?: string;
   onBackbtnPress?: Function;
+  style?: object;
+  transparent?: Boolean;
 }
 
 const Header: React.FC<Props> = ({
@@ -18,15 +20,26 @@ const Header: React.FC<Props> = ({
   title,
   hideSearch,
   onBackbtnPress,
+  style,
+  transparent,
 }) => {
   const {colors, dark} = useTheme() as CustomTheme;
   const {headline3} = useGlobalStyle();
   const navigation = useNavigation();
 
   return (
-    <View style={[styles.container, {backgroundColor: colors.secondary}]}>
+    <View
+      style={[
+        styles.container,
+        {
+          backgroundColor: transparent ? colors.background : colors.secondary,
+          elevation: 5,
+        },
+        style,
+      ]}>
       <StatusBar
-        backgroundColor={colors.secondary}
+        translucent={false}
+        backgroundColor={transparent ? colors.background : colors.secondary}
         barStyle={dark ? 'light-content' : 'dark-content'}
       />
       <Icon
@@ -60,7 +73,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    elevation: 5,
   },
 });
 
