@@ -8,13 +8,15 @@ import HeartIcon from '../Assets/HeartIcon';
 
 import AppText from './AppText';
 import IconBounce, {animationHandler} from '../Animations/IconBounce';
+import AddToCartModal from './AddToCartModal';
+import ActionSheet from 'react-native-actions-sheet';
 
 interface Props {}
 
 const HorizontalCard: React.FC<Props> = ({}) => {
   const {greyText} = useGlobalStyle();
   const {colors} = useTheme() as CustomTheme;
-
+  const sizeModal = useRef<ActionSheet>(null);
   const [inFavorite, setInFavorite] = useState(false);
   const heartIcon = useRef<animationHandler>(null);
 
@@ -57,10 +59,10 @@ const HorizontalCard: React.FC<Props> = ({}) => {
         onPress={() => {
           if (inFavorite) {
             heartIcon.current?.danimateHeart();
+            setInFavorite(false);
           } else {
-            heartIcon.current?.animateHeart();
+            sizeModal.current?.show();
           }
-          setInFavorite(!inFavorite);
         }}>
         <View
           style={[styles.addToFavorite, {backgroundColor: colors.background}]}>
@@ -74,6 +76,14 @@ const HorizontalCard: React.FC<Props> = ({}) => {
           </IconBounce>
         </View>
       </TouchableWithoutFeedback>
+      <AddToCartModal
+        ref={sizeModal}
+        onAdd={() => {
+          sizeModal.current?.hide();
+          setInFavorite(true);
+          heartIcon.current?.animateHeart();
+        }}
+      />
     </View>
   );
 };
